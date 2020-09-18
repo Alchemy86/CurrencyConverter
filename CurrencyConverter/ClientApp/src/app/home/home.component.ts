@@ -58,6 +58,8 @@ export class HomeComponent implements OnInit {
   }
 
   saveValue(value: number){
-    this._localStorage.setItem('currentValue', value.toString());
+    if (!!value) {
+      this._localStorage.setItem('currentValue', value.toString());
+    }
   }
 }

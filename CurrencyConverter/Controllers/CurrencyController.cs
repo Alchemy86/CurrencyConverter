@@ -55,6 +55,7 @@ namespace CurrencyConverter.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Get(DateTime from, DateTime to)
         {
+            _logger.LogInformation($"Getting audit data: {from} - {to}");
             var records = _context.CurrencyConversion.Where(x => x.DateTime >= from && x.DateTime <= to).ToList().OrderByDescending(x => x.ID);
             return Ok(records);
         }
@@ -69,24 +70,27 @@ namespace CurrencyConverter.Controllers
             return Ok();
         }
 
-        private async Task AddToAudit(CurrencyConversion @currencyConversion, int tryCount = 0)
+        private async Task AddToAudit(CurrencyConversion currencyConversion, int tryCount = 0)
         {
+            _logger.LogInformation($"Adding Entry to audit: {currencyConversion.DateTime} ");
             var newID = _context.CurrencyConversion.Select(x => x.ID).Max() + 1 + tryCount;
 
             try
             {
-                @currencyConversion.ID = newID;
+                _logger.LogInformation($"Trying more");
+                currencyConversion.ID = newID;
 
-                @currencyConversion.ID = newID;
-                _context.CurrencyConversion.Add(@currencyConversion);
+                currencyConversion.ID = newID;
+                _context.CurrencyConversion.Add(currencyConversion);
+                _logger.LogInformation($"Saving");
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Failed to add to audit for {@currencyConversion.ID}");
+                _logger.LogError($"Failed to add to audit for {currencyConversion.ID}");
                 if (tryCount >= 3)
                     throw ex;
-                await AddToAudit(@currencyConversion, tryCount + 1);
+                await AddToAudit(currencyConversion, tryCount + 1);
             }
 
         }
