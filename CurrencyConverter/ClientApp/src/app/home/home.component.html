@@ -1,0 +1,9 @@
+
+<div class="fields center">
+  <div>
+    <input type="number" #input [(ngModel)]="currentValue" (ngModelChange)='onFieldChange($event)' min="1" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" />
+  </div>
+  <span class="small">Pound sterling equals</span>
+</div>
+
+<app-exchange-rate [currencies$]="currencies$" [multiplier]="currentValue"></app-exchange-rate>

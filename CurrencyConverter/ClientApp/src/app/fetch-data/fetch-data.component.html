@@ -1,0 +1,25 @@
+<div class="fields center">
+  <h1 id="tableLabel">Audit</h1>
+  <input 
+  [ngModel]="from | date:'yyyy-MM-dd'" 
+  (ngModelChange)="from = $event; search()" 
+  type="date"
+  max="{{ to | date:'yyyy-MM-dd' }}">
+ <span>- TO -</span>
+  <input 
+    [ngModel]="to | date:'yyyy-MM-dd'" 
+    (ngModelChange)="to = $event; search()" 
+    type="date"
+    min="{{ from | date:'yyyy-MM-dd' }}">
+</div>
+
+<div *ngIf="(auditEntries$ | async) as auditEntries">
+  <div class="boxed" *ngFor="let audit of auditEntries">
+      <span class="small">{{moment(audit.dateTime).format('DD/MM/yyyy HH:mm')}} </span>
+      <div class="darkfont end">
+        <span><strong>Converted</strong> {{audit.multiplier}} {{audit.baseCurrency}} </span>
+        <span><strong>@ </strong> {{audit.conversionRate | number:'1.2-2'}} </span>
+        <span><strong>To</strong> {{audit.conversionValue | number:'1.2-2'}} {{audit.convertedCurrency}} </span>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+@mixin box-shadow-light {
+  box-shadow:  7px 7px 0px #9e9e9f, 
+             -7px -7px 0px #d6d6d7;
+  }
+  
+  @mixin box-shadow-light-pressed {
+    box-shadow: inset -12px -12px 12px 0 rgba(255,255,255,1),
+                inset 12px 12px 12px 0 rgba(0,0,0,0.03);
+  }
+  
+  @mixin glow {
+    color: var(--colour-glow);
+    filter: drop-shadow(0 0 15px var(--colour-glow));
+  }
+  

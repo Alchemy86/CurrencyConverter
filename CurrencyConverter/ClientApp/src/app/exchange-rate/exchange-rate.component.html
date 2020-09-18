@@ -1,0 +1,6 @@
+<div *ngIf="(currencies$ | async) as currencies">
+    <div class="boxed" *ngFor="let currency of currencies">
+        <span class="small">{{currency.name}} Exchange Rate: {{currency.value}}</span>
+        <span class="darkfont end">{{(multiplier * currency.value) | number:'1.2-2'}} {{currency.name}}</span>
+    </div>
+</div>
