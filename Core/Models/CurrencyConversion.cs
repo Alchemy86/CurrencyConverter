@@ -23,7 +23,8 @@ namespace Core.Models
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (DateTime > DateTime.Now) {
-                yield return new ValidationResult("Entries cannot be subnmitted in the future", new string[] { nameof(DateTime) });
+                //yield return new ValidationResult("Entries cannot be subnmitted in the future", new string[] { nameof(DateTime) });
+                //Disabled - time hosting on azure is different... doy
             }
 
             if (BaseCurrency != CurrencyName.GBP) {
